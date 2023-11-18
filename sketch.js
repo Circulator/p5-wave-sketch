@@ -5,7 +5,7 @@ const modules = [];
 const moduleWidth = 100;
 const moduleHeight = 100;
 
-const startsquare_width = 1800;
+const startsquare_width = 200;
 const startsquare_height = 100;
 
 let time = 0;
@@ -17,7 +17,7 @@ class ColorBox {
 }
 
 function setup() {
-  createCanvas(1800, 900);
+  createCanvas(1000, 900);
   colorMode(HSB, 150, 100, 100);
   //background('#333333');
 
