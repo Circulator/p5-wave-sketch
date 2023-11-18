@@ -1,4 +1,4 @@
-const moduleRows = 5;
+const moduleRows = 6;
 const moduleColumns = 6;
 const fadeSpeed = 0;
 const modules = [];
