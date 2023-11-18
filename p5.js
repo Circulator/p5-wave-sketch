@@ -119,7 +119,7 @@ class Wave {
     stroke(0);
 
     pop();
-    this.time += 0.05;
+    this.time += 0;
   }
 }
 
