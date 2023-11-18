@@ -1,4 +1,4 @@
-const moduleRows = 6;
+const moduleRows = 5;
 const moduleColumns = 6;
 const fadeSpeed = 0;
 const modules = [];
@@ -19,7 +19,7 @@ class ColorBox {
 }
 
 function setup() {
-  createCanvas(1800, 900);
+  createCanvas(600, 900);
   colorMode(HSB, 150, 100, 100);
   //background('#333333');
 
@@ -119,7 +119,7 @@ class Wave {
     stroke(0);
 
     pop();
-    this.time += 0;
+    this.time += 0.05;
   }
 }
 
