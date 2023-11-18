@@ -5,7 +5,7 @@ const modules = [];
 const moduleWidth = 100;
 const moduleHeight = 100;
 
-const startsquare_width = 1800;
+const startsquare_width = 200;
 const startsquare_height = 100;
 
 let time = 0;
@@ -17,9 +17,9 @@ class ColorBox {
 }
 
 function setup() {
-  createCanvas(800, 900);
+  createCanvas(1800, 900);
   colorMode(HSB, 150, 100, 100);
-  //background('#333333');
+  background('#333333');
 
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 5; j++) {
@@ -93,7 +93,6 @@ class Wave{
   pop();
   this.time += 0.05;
   //this.time += 0;
-  //this.time += 0;
 }
   
   
@@ -127,7 +126,6 @@ class Module {
     this.columns = columns;
     this.rows = rows;
     this.moduleWidth = moduleWidth;
-    //this.moduleWidth = moduleWidth*2;
     this.moduleHeight = moduleHeight;
     this.coordX = coordX;
     this.coordY = coordY;
@@ -142,7 +140,6 @@ class Module {
     translate(this.coordX, this.coordY);
 
     fill(random(0, 200), random(0, 20), random(50, 100));
-
     rect(0, 0, this.moduleWidth, this.moduleHeight);
 
     for (let r = 0 ; r < this.rows; r++) {
@@ -167,13 +164,6 @@ function waveEffect(x, y, rowOffset) {
   //const magnitude = 20;
   const magnitude =50;
   
-  return magnitude * sin(time * 1 + x / 50 + y / 50 + rowOffset * 0.5);
+  return magnitude * sin(time * 1 + x / 10 + y / 30 + rowOffset * 0.5);
   //return magnitude * sin(time * 2 + x / 50 + y / 50 + rowOffset * 0.5);
-}
-
-function keyPressed() {
-  if (key === 'e' || key === 'E') {
-    // Save the canvas as 'myCanvas.png'
-    saveCanvas('myCanvas', 'png');
-  }
 }
