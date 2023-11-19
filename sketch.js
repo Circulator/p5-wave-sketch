@@ -111,40 +111,41 @@ function executeCode1() {
 }
 
 function executeCode2() {
-  background('#333333');
-  for (let i = 0; i < 4; i++) {
-    waves[i].updateWave();
+  background('#333333'); // Different background color for Code 2
+
+  // Update and draw waves with a different color and radius for Code 2
+  for (let wave of waves) {
+    wave.setRadius(10); // Smaller radius for Code 2
+    noFill();; // Blue color for Code 2
+    wave.updateWave();
   }
 
-  // Draw vertical lines
+  // Draw vertical lines (similar to executeCode1)
   for (let i = startsquare_width + 50; i < startsquare_width + 1000; i += 200) {
     stroke(70);
     line(i, startsquare_height - 50, i, startsquare_height + 200 * 3 + 150);
   }
 
-  // Calculate the number of squares and the spacing
+  // Calculate spacing and draw the grid of squares (similar to executeCode1)
   const squareCols = 5;
   const squareRows = 4;
-  const totalSpacingX = 200 * 5; // Total horizontal spacing
-  const totalSpacingY = 200 * 3; // Total vertical spacing
-  const spacingX = (width - startsquare_width - totalSpacingX - squareCols * moduleWidth) / (squareCols - 1);
-  const spacingY = (height - startsquare_height - totalSpacingY - squareRows * moduleHeight) / (squareRows - 1);
+  const spacingX = (width - startsquare_width - squareCols * moduleWidth) / (squareCols + 1);
+  const spacingY = (height - startsquare_height - squareRows * moduleHeight) / (squareRows + 1);
 
-  // Draw the grid of squares (5x4) aligned with vertical lines
   for (let i = 0; i < squareCols; i++) {
     for (let j = 0; j < squareRows; j++) {
-      const squareX = startsquare_width + i * (moduleWidth + spacingX + 75);
-      const squareY = startsquare_height + j * (moduleHeight + spacingY + 166.5);
-      fill(random(0, 20), random(0, 20), random(0, 80));
-      rect(squareX, squareY, moduleWidth, moduleHeight);
+      const squareX = startsquare_width + spacingX + i * (moduleWidth + spacingX);
+      const squareY = startsquare_height + spacingY + j * (moduleHeight + spacingY);
+      fill(random(50, 100), random(0, 20), random(20, 60)); 
     }
   }
 
-  // Draw the modules on top
+  // Draw modules on top (similar to executeCode1)
   for (const module of modules) {
     module.drawModule();
   }
 }
+
 
 function executeCode3() {
   background('#333333'); // Different background color for Code 2
@@ -280,10 +281,11 @@ class Module {
     push();
     translate(this.coordX, this.coordY);
 
-    // Draw squares on the left side
+    // Draw squares with random colors on the left side
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.columns / 2; c++) {
-        fill(this.cells[r][c]);
+        // Use the cell value to determine the color
+        fill(this.cells[r][c], random(20, 70), random(20, 70),random(20, 200));
         rect(c * cellWidth, r * cellHeight, cellWidth, cellHeight);
       }
     }
