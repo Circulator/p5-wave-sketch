@@ -1,7 +1,9 @@
-let mySound;
+let mySound1, mySound2, mySound3;
 
 function preload() {
-  mySound = loadSound('./glitch_wave_2.mp3');
+  mySound1 = loadSound('./glitch_wave_1.mp3');
+  mySound2 = loadSound('./glitch_wave_2.mp3');
+  mySound3 = loadSound('./glitch_wave_3.mp3');
 }
 
 const moduleRows = 6;
@@ -32,7 +34,9 @@ function setup() {
     waves.push(new Wave(i));
   }
 
-  mySound.loop(); // This will loop the sound
+  mySound1.loop(); // This will loop the sound
+  mySound2.loop(); // This will loop the sound
+  mySound3.loop(); // This will loop the sound
 }
 
 function generateCells() {
@@ -107,38 +111,41 @@ function executeCode1() {
 }
 
 function executeCode2() {
-  background('#333333'); // Different background color for Code 2
+  background('#333333'); // Set a different background color for this segment
 
-  // Update and draw waves with a different color and radius for Code 2
+  // Update and draw waves
   for (let wave of waves) {
-    wave.setRadius(20); // Smaller radius for Code 2
-    wave.setFillColor(color(0, 0, 255)); // Blue color for Code 2
+    wave.setRadius(0); // Set radius to 0 for no wave effect
+    wave.setFillColor(color(0, 0, 255)); // Set fill color to blue
     wave.updateWave();
   }
 
-  // Draw vertical lines (similar to executeCode1)
+  // Draw vertical lines
   for (let i = startsquare_width + 50; i < startsquare_width + 1000; i += 200) {
     stroke(70);
     line(i, startsquare_height - 50, i, startsquare_height + 200 * 3 + 150);
   }
 
-  // Calculate spacing and draw the grid of squares (similar to executeCode1)
+  // Calculate spacing and draw the grid of squares
   const squareCols = 5;
   const squareRows = 4;
-  const spacingX = (width - startsquare_width - squareCols * moduleWidth) / (squareCols + 1);
-  const spacingY = (height - startsquare_height - squareRows * moduleHeight) / (squareRows + 1);
+  const totalSpacingX = 200 * 5;
+  const totalSpacingY = 200 * 3;
+  const spacingX = (width - startsquare_width - totalSpacingX - squareCols * moduleWidth) / (squareCols - 1);
+  const spacingY = (height - startsquare_height - totalSpacingY - squareRows * moduleHeight) / (squareRows - 1);
 
   for (let i = 0; i < squareCols; i++) {
     for (let j = 0; j < squareRows; j++) {
-      const squareX = startsquare_width + spacingX + i * (moduleWidth + spacingX);
-      const squareY = startsquare_height + spacingY + j * (moduleHeight + spacingY);
-      fill(random(50, 100), random(0, 20), random(20, 60)); // Different fill color for Code 2
-      }
+      const squareX = startsquare_width + i * (moduleWidth + spacingX + 75);
+      const squareY = startsquare_height + j * (moduleHeight + spacingY + 166.5);
+      fill(random(0, 20), random(0, 20), random(0, 80));
+      rect(squareX, squareY, moduleWidth, moduleHeight);
+    }
   }
 
-  // Draw modules on top (similar to executeCode1)
-  for (const module of modules) {
-    module.drawModule();
+  // Draw the modules on top
+  for (const m of modules) {
+    m.drawModule();
   }
 }
 
@@ -180,7 +187,7 @@ function executeCode3() {
 
 
 function executeCode4() {
-  background('#778899'); // Set background color for Code 4
+  background('#333333'); // Set background color for Code 4
 
   // Update and draw waves with new properties
   for (let wave of waves) {
