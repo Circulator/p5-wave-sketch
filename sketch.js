@@ -1,7 +1,6 @@
 let mySound;
 
 function preload() {
-  // Replace 'your_music_file.mp3' with the path to your mp3 file
   mySound = loadSound('./glitch_wave_2.mp3');
 }
 
