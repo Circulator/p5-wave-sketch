@@ -1,10 +1,3 @@
-let mySound;
-
-function preload() {
-  mySound = loadSound('./glitch_wave_2.mp3');
-}
-
-
 const moduleRows = 6;
 const moduleColumns = 6;
 const fadeSpeed = 0;
@@ -19,6 +12,8 @@ let time = 0;
 let waves = [];
 let wave = [];
 
+
+
 class ColorBox {
   // ... (same as before)
 }
@@ -30,16 +25,14 @@ function setup() {
 
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 5; j++) {
-      modules.push(new Module(generateCells(), startsquare_width + 200 * j, startsquare_height + 200 * i, moduleWidth, moduleHeight, moduleColumns, moduleRows, i));
+      modules.push(new Module(startsquare_width, startsquare_height, moduleWidth, moduleHeight));
+  
     }
   }
 
   for (let i = 1; i < 5; i++) {
     waves.push(new Wave(i));
   }
-    
-  // Play the loaded sound
-  mySound.play();
 }
 
 function generateCells() {
@@ -55,6 +48,7 @@ function generateCells() {
 
 function draw() {
   background('#333333');
+  
   for (let i = 0; i < 4; i++) {
     waves[i].updateWave();
   }
@@ -104,7 +98,7 @@ class Wave {
     push();
     translate(100, 200 * this.yPos - 50);
 
-    let radius = 30;
+    let radius = 0;
 
     let x = radius * cos(this.time);
     let y = radius * sin(this.time);
@@ -113,7 +107,7 @@ class Wave {
 
     // Set the stroke color to blue
     stroke(0, 0, 255);
-    fill(30);
+    noFill();
     strokeWeight(0.5);
     beginShape();
     for (let i = 0; i < this.data.length; i++) {
@@ -129,44 +123,30 @@ class Wave {
   }
 }
 
+function drawTrapezium(xCenter, yCenter, tileSize) {
+  // Randomly adjust each vertex within the bounds of the tile size
+  const halfTile = tileSize / 2;
+  fill(random(0,50));
+  quad(
+    xCenter - halfTile + random(-halfTile, halfTile), yCenter - halfTile,
+    xCenter + halfTile + random(-halfTile, halfTile), yCenter - halfTile,
+    xCenter + halfTile + random(-halfTile, halfTile), yCenter + halfTile,
+    xCenter - halfTile + random(-halfTile, halfTile), yCenter + halfTile
+  );
+}
 
 class Module {
-  constructor(cells, coordX, coordY, moduleWidth, moduleHeight, columns, rows, rowOffset) {
-    this.cells = cells;
-    this.columns = columns;
-    this.rows = rows;
+  constructor(coordX, coordY, moduleWidth, moduleHeight) {
     this.moduleWidth = moduleWidth;
     this.moduleHeight = moduleHeight;
     this.coordX = coordX;
     this.coordY = coordY;
-    this.rowOffset = rowOffset;
   }
 
   drawModule() {
-    const cellWidth = this.moduleWidth / this.columns;
-    const cellHeight = this.moduleHeight / this.rows;
-
     push();
     translate(this.coordX, this.coordY);
-
-    for (let r = 0; r < this.rows; r++) {
-      for (let c = 0; c < this.columns / 2; c++) {
-        this.cells[r][c] = constrain(this.cells[r][c], 0, random(0, 130));
-
-        const y = this.moduleHeight * (r / this.rows);
-        const x = this.moduleWidth * (c / this.columns);
-
-        const yOffset = waveEffect(x, y, this.rowOffset);
-
-        fill(random(0, 40), random(0, 40), random(0, 80));
-        beginShape();
-        vertex(x, y + yOffset);
-        vertex(x + cellWidth, y + yOffset);
-        vertex(x + cellWidth, y + yOffset + cellHeight);
-        vertex(x, y + yOffset + cellHeight);
-        endShape(CLOSE);
-      }
-    }
+    drawTrapezium(this.moduleWidth / 2, this.moduleHeight / 2, this.moduleWidth, this.moduleHeight);
     pop();
   }
 }
