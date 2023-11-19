@@ -111,13 +111,9 @@ function executeCode1() {
 }
 
 function executeCode2() {
-  background('#333333'); // Set a different background color for this segment
-
-  // Update and draw waves
-  for (let wave of waves) {
-    wave.setRadius(0); // Set radius to 0 for no wave effect
-    wave.setFillColor(color(0, 0, 255)); // Set fill color to blue
-    wave.updateWave();
+  background('#333333');
+  for (let i = 0; i < 4; i++) {
+    waves[i].updateWave();
   }
 
   // Draw vertical lines
@@ -126,14 +122,15 @@ function executeCode2() {
     line(i, startsquare_height - 50, i, startsquare_height + 200 * 3 + 150);
   }
 
-  // Calculate spacing and draw the grid of squares
+  // Calculate the number of squares and the spacing
   const squareCols = 5;
   const squareRows = 4;
-  const totalSpacingX = 200 * 5;
-  const totalSpacingY = 200 * 3;
+  const totalSpacingX = 200 * 5; // Total horizontal spacing
+  const totalSpacingY = 200 * 3; // Total vertical spacing
   const spacingX = (width - startsquare_width - totalSpacingX - squareCols * moduleWidth) / (squareCols - 1);
   const spacingY = (height - startsquare_height - totalSpacingY - squareRows * moduleHeight) / (squareRows - 1);
 
+  // Draw the grid of squares (5x4) aligned with vertical lines
   for (let i = 0; i < squareCols; i++) {
     for (let j = 0; j < squareRows; j++) {
       const squareX = startsquare_width + i * (moduleWidth + spacingX + 75);
@@ -144,8 +141,8 @@ function executeCode2() {
   }
 
   // Draw the modules on top
-  for (const m of modules) {
-    m.drawModule();
+  for (const module of modules) {
+    module.drawModule();
   }
 }
 
@@ -251,6 +248,18 @@ class Wave {
   }
 }
 
+function drawTrapezium(xCenter, yCenter, tileSize) {
+  // Randomly adjust each vertex within the bounds of the tile size
+  const halfTile = tileSize / 2;
+  fill(random(0, 50));
+  quad(
+    xCenter - halfTile + random(-halfTile, halfTile), yCenter - halfTile,
+    xCenter + halfTile + random(-halfTile, halfTile), yCenter - halfTile,
+    xCenter + halfTile + random(-halfTile, halfTile), yCenter + halfTile,
+    xCenter - halfTile + random(-halfTile, halfTile), yCenter + halfTile
+  );
+}
+
 class Module {
   constructor(cells, coordX, coordY, moduleWidth, moduleHeight, columns, rows, rowOffset) {
     this.cells = cells;
@@ -266,35 +275,29 @@ class Module {
   drawModule() {
     const cellWidth = this.moduleWidth / this.columns;
     const cellHeight = this.moduleHeight / this.rows;
+    const halfModuleWidth = this.moduleWidth / 2;
 
     push();
     translate(this.coordX, this.coordY);
 
-    fill(random(0, 200), random(0, 20), random(50, 100));
-    rect(0, 0, this.moduleWidth, this.moduleHeight);
-
+    // Draw squares on the left side
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.columns / 2; c++) {
-        this.cells[r][c] = constrain(this.cells[r][c], 0, random(0, 130));
+        fill(this.cells[r][c]);
+        rect(c * cellWidth, r * cellHeight, cellWidth, cellHeight);
+      }
+    }
 
-        const y = this.moduleHeight * (r / this.rows);
-        const x = this.moduleWidth * (c / this.columns);
-
-        const yOffset = waveEffect(x, y, this.rowOffset);
-        fill(this.cells[r][c], random(0, 10), random(0, 50));
-        rect(x, y + yOffset, cellWidth, cellHeight);
+    // Draw trapeziums on the right side
+    for (let r = 0; r < this.rows; r++) {
+      for (let c = this.columns / 2; c < this.columns; c++) {
+        let xCenter = halfModuleWidth + (c - this.columns / 2) * cellWidth + cellWidth / 2;
+        let yCenter = r * cellHeight + cellHeight / 2;
+        drawTrapezium(xCenter, yCenter, cellWidth);
       }
     }
 
     pop();
-  }
-
-  updateCellColors(colorFunction) {
-    for (let r = 0; r < this.rows; r++) {
-      for (let c = 0; c < this.columns; c++) {
-        this.cells[r][c] = colorFunction();
-      }
-    }
   }
 }
 
