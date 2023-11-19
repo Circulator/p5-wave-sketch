@@ -17,7 +17,7 @@ class ColorBox {
 }
 
 function setup() {
-  createCanvas(1800, 1200);
+  createCanvas(1800, 900);
   colorMode(HSB, 150, 100, 100);
   //background('#333333');
 
