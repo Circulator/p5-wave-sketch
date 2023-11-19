@@ -168,8 +168,7 @@ function executeCode3() {
     for (let j = 0; j < squareRows; j++) {
       const squareX = startsquare_width + spacingX + i * (moduleWidth + spacingX);
       const squareY = startsquare_height + spacingY + j * (moduleHeight + spacingY);
-      fill(random(50, 100), random(0, 20), random(20, 60)); // Different fill color for Code 2
-      rect(squareX, squareY, moduleWidth, moduleHeight);
+      fill(random(50, 100), random(0, 20), random(20, 60)); 
     }
   }
 
@@ -181,41 +180,29 @@ function executeCode3() {
 
 
 function executeCode4() {
-  background('#333333');
+  background('#778899'); // Set background color for Code 4
 
-  // Update and draw waves with grey fill color
+  // Update and draw waves with new properties
   for (let wave of waves) {
-    wave.setRadius(30);
-    wave.setFillColor(color(30)); // Grey color
-    wave.updateWave();
+    wave.setRadius(50); // Set a different radius
+    wave.setFillColor(color(40)); // Set fill color to grey
+    wave.updateWave(); // Update the wave with these new properties
+  }
+
+  // Draw modules with updated wave effect
+  for (const module of modules) {
+    // Update cell colors if needed
+    // module.updateCellColors(() => color(random(255), random(255), random(255)));
+    module.drawModule(); // Draw each module
   }
 
   // Draw vertical lines
   for (let i = startsquare_width + 50; i < startsquare_width + 1000; i += 200) {
-    stroke(70);
+    stroke(70); // Stroke color for lines
     line(i, startsquare_height - 50, i, startsquare_height + 200 * 3 + 150);
   }
-
-  // Calculate spacing and draw the grid of squares
-  const squareCols = 5;
-  const squareRows = 4;
-  const spacingX = (width - startsquare_width - squareCols * moduleWidth) / (squareCols + 1);
-  const spacingY = (height - startsquare_height - squareRows * moduleHeight) / (squareRows + 1);
-
-  for (let i = 0; i < squareCols; i++) {
-    for (let j = 0; j < squareRows; j++) {
-      const squareX = startsquare_width + spacingX + i * (moduleWidth + spacingX);
-      const squareY = startsquare_height + spacingY + j * (moduleHeight + spacingY);
-      fill(random(0, 40), random(0, 40), random(0, 80)); // Adjusted fill color as per module code
-     
-    }
-  }
-
-  // Draw modules on top
-  for (const module of modules) {
-    module.drawModule();
-  }
 }
+
 
 // Implement executeCode3, executeCode4, executeCode5...
 
