@@ -1,3 +1,11 @@
+let mySound;
+
+function preload() {
+  // Replace 'your_music_file.mp3' with the path to your mp3 file
+  mySound = loadSound('./glitch_wave_2.mp3');
+}
+
+
 const moduleRows = 6;
 const moduleColumns = 6;
 const fadeSpeed = 0;
@@ -30,6 +38,9 @@ function setup() {
   for (let i = 1; i < 5; i++) {
     waves.push(new Wave(i));
   }
+    
+  // Play the loaded sound
+  mySound.play();
 }
 
 function generateCells() {
