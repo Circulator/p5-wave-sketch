@@ -285,7 +285,8 @@ class Module {
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.columns / 2; c++) {
         // Use the cell value to determine the color
-        fill(this.cells[r][c], random(20, 70), random(20, 70),random(20, 200));
+        //fill(this.cells[r][c], random(20, 70), random(20, 70),random(20, 200));
+        fill(random(0, 20), random(0, 20), random(0, 80));
         rect(c * cellWidth, r * cellHeight, cellWidth, cellHeight);
       }
     }
